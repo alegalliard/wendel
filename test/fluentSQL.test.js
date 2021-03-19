@@ -5,7 +5,7 @@ const data = [
     {
         id: 0,
         name: 'Ale',
-        category: 'dev'
+        category: 'developer'
     },
     {
         id: 1,
@@ -13,7 +13,7 @@ const data = [
         category: 'log'
     },
     {
-        id: 2,
+        id: 3,
         name: 'Fernanda',
         category: 'sale'
     },
@@ -24,18 +24,33 @@ describe('Test Suite for FluentSQL Builder', () => {
         const result = FluentSQLBuilder.for(data)
         const expected = new FluentSQLBuilder({ database: data })
         expect(result).toStrictEqual(expected)
+
     })
 
-    // test.todo('#build should return the empty object instance', () => {
-        
-    // })
+    test('#build should return the empty object instance', () => {
+        const result = FluentSQLBuilder.for(data).build()
+        const expected = data
+        expect(result).toStrictEqual(expected)
+    })
 
-    // test.todo('#limit given a collection it should limit results', () => {
+    test('#limit given a collection it should limit results', () => {
+        const result = FluentSQLBuilder.for(data).limit(1).build()
         
-    // })
-    // test.todo('#where given a collection it should filter data', () => {
+        const expected = [data[0]]
+        expect(result).toStrictEqual(expected)
+    })
+
+
+    test.only('#where given a collection it should filter data', () => {
+        const result = FluentSQLBuilder.for(data)
+        .where({
+            category: /^dev/
+        }).build()
         
-    // })
+        const expected = data.filter(({ category }) => category.slice(0,3) === 'dev')
+        
+        expect(result).toStrictEqual(expected)
+    })
 
     // test.todo('#select given a collection it should return only specific fields', () => {
         
