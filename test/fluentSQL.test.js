@@ -41,7 +41,7 @@ describe('Test Suite for FluentSQL Builder', () => {
     })
 
 
-    test.only('#where given a collection it should filter data', () => {
+    test('#where given a collection it should filter data', () => {
         const result = FluentSQLBuilder.for(data)
         .where({
             category: /^dev/
@@ -52,9 +52,15 @@ describe('Test Suite for FluentSQL Builder', () => {
         expect(result).toStrictEqual(expected)
     })
 
-    // test.todo('#select given a collection it should return only specific fields', () => {
-        
-    // })
+    test('#select given a collection it should return only specific fields', () => {
+        const result = FluentSQLBuilder.for(data)
+                        .select(['name', 'category'])
+                        .build()
+
+        const expected = data.map(({name, category}) => ({name, category}))
+
+        expect(result).toStrictEqual(expected)
+    })
 
     // test.todo('#orderBy given a collection it should order results bu field', () => {
         

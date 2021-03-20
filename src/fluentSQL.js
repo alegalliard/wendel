@@ -60,6 +60,19 @@ export default class FluentSQLBuilder {
         return true
     }
 
+    #performSelect(item) {
+        const currentItem = {}
+        const entries = Object.entries(item)
+        for(const [key, value] of entries) {
+            if(this.#select.length && !this.#select.includes(key)) continue
+
+            currentItem[key] = value
+
+        }
+
+        return currentItem
+    }
+
     // factory, quem realmente retorna a instância do objetos
     build() {
         const results = []
@@ -67,7 +80,8 @@ export default class FluentSQLBuilder {
         for(const item of this.#database) {
             if(!this.#performWhere(item)) continue;
 
-            results.push(item)
+            const currentItem = this.#performSelect(item)
+            results.push(currentItem)
 
             if(this.#performLimit(results)) break;
 
