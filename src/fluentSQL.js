@@ -67,10 +67,15 @@ export default class FluentSQLBuilder {
             if(this.#select.length && !this.#select.includes(key)) continue
 
             currentItem[key] = value
-
         }
 
         return currentItem
+    }
+
+    #performOrderBy(results) {
+        if(!this.#orderBy) return results
+
+        return results.sort((prev, next) => prev[this.#orderBy].localeCompare(next[this.#orderBy]) )
     }
 
     // factory, quem realmente retorna a instância do objetos
@@ -87,6 +92,8 @@ export default class FluentSQLBuilder {
 
         }
 
-        return results
+        const finalResult = this.#performOrderBy(results)
+
+        return finalResult
     }
 }

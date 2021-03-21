@@ -9,12 +9,12 @@ const data = [
     },
     {
         id: 1,
-        name: 'Anderson',
+        name: 'Fernanda',
         category: 'log'
     },
     {
         id: 3,
-        name: 'Fernanda',
+        name: 'Anderson',
         category: 'sale'
     },
 ]
@@ -62,9 +62,31 @@ describe('Test Suite for FluentSQL Builder', () => {
         expect(result).toStrictEqual(expected)
     })
 
-    // test.todo('#orderBy given a collection it should order results bu field', () => {
-        
-    // })
+    test('#orderBy given a collection it should order results by field', () => {
+        const result = FluentSQLBuilder.for(data)
+                        .orderBy('name')
+                        .build()
+
+        const expected = [
+            {
+                id: 0,
+                name: 'Ale',
+                category: 'developer'
+            },
+            {
+                id: 3,
+                name: 'Anderson',
+                category: 'sale'
+            },
+            {
+                id: 1,
+                name: 'Fernanda',
+                category: 'log'
+            },
+        ]
+
+        expect(result).toStrictEqual(expected)
+    })
 
     test.todo('pipeline')
 })
