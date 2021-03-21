@@ -13,9 +13,14 @@ const data = [
         category: 'log'
     },
     {
-        id: 3,
+        id: 2,
         name: 'Anderson',
         category: 'sale'
+    },
+    {
+        id: 3,
+        name: 'Mateus',
+        category: 'developer'
     },
 ]
 
@@ -74,7 +79,7 @@ describe('Test Suite for FluentSQL Builder', () => {
                 category: 'developer'
             },
             {
-                id: 3,
+                id: 2,
                 name: 'Anderson',
                 category: 'sale'
             },
@@ -83,10 +88,27 @@ describe('Test Suite for FluentSQL Builder', () => {
                 name: 'Fernanda',
                 category: 'log'
             },
+            {
+                id: 3,
+                name: 'Mateus',
+                category: 'developer'
+            },
         ]
 
         expect(result).toStrictEqual(expected)
     })
 
-    test.todo('pipeline')
+    test('pipeline', () => {
+        const results = FluentSQLBuilder.for(data)
+                            .where({ category: 'developer' })
+                            .where({ name: /l/ })
+                            .select(['name', 'category'])
+                            .orderBy('name')
+                            .build()
+
+        const expected = data.filter(({ id }) => id === 0)
+                                .map(({ name, category }) => ({ name, category }))
+
+        expect(results).toStrictEqual(expected)
+    })
 })

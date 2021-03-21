@@ -31,3 +31,6 @@ No package.json, adicionar o npx no test para garantir que o Jest utilizado ser�
 NODE_OPTIONS=--experimental-vm-modules : para trabalhar com ECMAScript modules
 --coverage: o quão testado está o código. Rodar esse código vai gerar um relatório em HTML dentro da pasta coverage/
 --watchAll: toda vez que alterar o código, restarta o projeto
+
+
+Funções privadas são testadas via métodos públicos
