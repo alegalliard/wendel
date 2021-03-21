@@ -75,7 +75,13 @@ export default class FluentSQLBuilder {
     #performOrderBy(results) {
         if(!this.#orderBy) return results
 
-        return results.sort((prev, next) => prev[this.#orderBy].localeCompare(next[this.#orderBy]) )
+        return results.sort((prev, next) => {
+            if(!prev[this.#orderBy]) 
+                return prev
+            
+            return prev[this.#orderBy].toString()
+                        .localeCompare(next[this.#orderBy].toString())
+        } )
     }
 
     // factory, quem realmente retorna a instância do objetos
